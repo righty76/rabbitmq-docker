@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.9-management
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_HOME: "/etc/rabbitmq/"
+      NODENAME: "rabbit@rabbitmq"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+      - rabbitmq-logs:/var/log/rabbitmq
+    networks:
+      - rabbitmq
+volumes:
+  rabbitmq-data:
+  rabbitmq-logs:
+networks:
+  rabbitmq:
+    driver: bridge
+
+#docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 -e RABBITMQ_HOME=/etc/rabbitmq/ -e NODENAME=rabbit@rabbitmq -v rabbitmq-data:/var/lib/rabbitmq -v rabbitmq-logs:/var/log/rabbitmq --restart always rabbitmq:3.9-management
